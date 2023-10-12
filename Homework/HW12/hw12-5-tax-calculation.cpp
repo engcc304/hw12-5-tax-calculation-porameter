@@ -47,3 +47,59 @@
         Tax (7% per year) : 61,017.60 Bath
         Most tax in company : Bill (18,564.00 Bath per year)
 */
+
+
+#include <stdio.h>
+#include <string.h>
+
+struct Employee {
+    char Name[50] ;
+    double Salary ;
+} ;
+
+// ฟังก์ชันคำนวณภาษี
+double CalculateTax( double salary ) {
+    return salary * 0.07 ;
+}
+
+int main() {
+    int n = 0 ;
+    double totalSalaryPerYear = 0 ;
+    double totalTax = 0 ;
+    char maxTaxName[50] = "" ;
+    double maxTax = 0 ;
+
+    printf( "Employee 1's Name : " ) ;
+    char choice[50] ;
+    scanf( " %s" , choice ) ;
+
+    while ( strcmp("-1", choice) != 0 ) {
+        struct Employee emp ;
+
+        printf("Salary (Bath/Month) : ") ; 
+        scanf("%lf", &emp.Salary) ;
+
+        n++ ;
+
+        double salaryPerYear = emp.Salary * 12 ;
+        double tax = CalculateTax( salaryPerYear ) ;
+
+        totalSalaryPerYear += salaryPerYear ;
+        totalTax += tax ;
+
+        if ( tax > maxTax ) {
+            maxTax = tax ;
+            strcpy( maxTaxName , emp.Name ) ;
+        }
+
+        printf( "Employee %d's Name : " , n + 1 ) ;
+        scanf( " %s" , choice ) ;
+    }
+
+    printf( "All salary per month: %.2lf Bath\n" , totalSalaryPerYear / 12 ) ;
+    printf( "All salary per year: %.2lf Bath\n" , totalSalaryPerYear ) ;
+    printf( "Tax (7%% per year) : %.2lf Bath\n" , totalTax ) ;
+    printf( "Most tax in company : %s (%.2lf Bath per year)\n" , maxTaxName , maxTax ) ; 
+
+    return 0 ;
+}
